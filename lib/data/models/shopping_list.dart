@@ -11,15 +11,20 @@ class ShoppingList {
   bool isActive = true;
   final int owner;
 
-  ShoppingList({required this.id, required this.name, required this.color, required this.emoji, required this.owner});
+  ShoppingList(
+      {required this.id,
+      required this.name,
+      required this.color,
+      required this.emoji,
+      required this.owner});
 
-  bool canBeDeleted () {
+  bool canBeDeleted() {
     if (items.isEmpty) {
       return true;
     }
 
-    for(int i = 0; i<items.length; i++) {
-      if (!items[i].isBought) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i].isBought == false) {
         return false;
       }
     }

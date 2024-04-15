@@ -5,10 +5,9 @@ import '../models/product.dart';
 import '../models/user.dart';
 
 class BasketBuddyDataBase {
-
-  late List<Category> categories;
-  late List<Product> products;
-  late List<ShoppingList> shoppingLists;
+  List<Category> categories = [];
+  List<Product> products = [];
+  List<ShoppingList> shoppingLists = [];
   late User user;
 
   BasketBuddyDataBase();
