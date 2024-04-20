@@ -205,6 +205,28 @@ class BasketBuddyAPI {
     }
   }
 
+  Future<void> updateShoppingList(ShoppingList shoppingList) async {
+    final shoppingListObject = {
+      "name": shoppingList.name,
+      "color": shoppingList.color,
+      "emoji": shoppingList.emoji,
+      "isActive": shoppingList.isActive
+    };
+    final response = await client.put(
+      Uri.parse('$shoppingListsURL${shoppingList.id}/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token $authToken'
+      },
+      body: jsonEncode(shoppingListObject),
+    );
+    if (response.statusCode == 200) {
+    } else {
+      throw Exception(
+          'Unknown exception. failure code: ${response.statusCode}');
+    }
+  }
+
   Future<void> addShoppingListItem(
       ShoppingListItem shoppingListItem, int listId) async {
     var shoppingListItemObject = {
@@ -223,6 +245,30 @@ class BasketBuddyAPI {
     );
 
     if (response.statusCode == 201) {
+    } else {
+      throw Exception(
+          'Unknown exception. failure code: ${response.statusCode}');
+    }
+  }
+
+  Future<void> updateShoppingListItem(
+      ShoppingListItem shoppingListItem, int listId) async {
+    var shoppingListItemObject = {
+      "product_id": shoppingListItem.productId,
+      "quantity": shoppingListItem.quantity,
+      "unit": shoppingListItem.unit.toString().split('.').last.toUpperCase(),
+      "isBought": shoppingListItem.isBought
+    };
+    final response = await client.put(
+      Uri.parse('$shoppingListsURL$listId/items/${shoppingListItem.id}/'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token $authToken'
+      },
+      body: jsonEncode(shoppingListItemObject),
+    );
+
+    if (response.statusCode == 200) {
     } else {
       throw Exception(
           'Unknown exception. failure code: ${response.statusCode}');
@@ -273,9 +319,7 @@ class BasketBuddyAPI {
     );
 
     if (response.statusCode == 200) {
-      String data = response.body;
-
-      return jsonDecode(data);
+      return jsonDecode(utf8.decode(response.bodyBytes));
     } else {
       throw response.statusCode;
     }

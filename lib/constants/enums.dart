@@ -25,3 +25,5 @@ enum SignUpStatus {
 }
 
 enum AllListsStatus { loading, errorOffline, errorOther, empty, loaded }
+
+enum ListDetailsStatus {loading, error, empty, loaded }

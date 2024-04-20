@@ -10,27 +10,27 @@ import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final BasketBuddyDataBase basketBuddyDataBase;
-
-  LoginBloc(this.basketBuddyDataBase)
-      : super(const LoginState(status: LoginStatus.idle, api: null)) {
+  LoginBloc(this._basketBuddyDataBase, this._api)
+      : super(const LoginState(status: LoginStatus.idle)) {
     on<AuthenticateEvent>(_onAuthenticateEvent);
     on<ChangeStatusEvent>(_onChangeStatusEvent);
   }
+
+  final BasketBuddyDataBase _basketBuddyDataBase;
+  final BasketBuddyAPI _api;
+
   Future<void> _onAuthenticateEvent(
       AuthenticateEvent event, Emitter<LoginState> emit) async {
-    BasketBuddyAPI basketBuddyAPI = BasketBuddyAPI();
     emit(state.copyWith(
       status: LoginStatus.loading,
     ));
     try {
-      User user = await basketBuddyAPI.logIn(event.login, event.password);
-      basketBuddyDataBase.user = user;
-      emit(state.copyWith(status: LoginStatus.confirmed, api: basketBuddyAPI));
+      User user = await _api.logIn(event.login, event.password);
+      _basketBuddyDataBase.user = user;
+      emit(state.copyWith(status: LoginStatus.confirmed));
     } catch (e) {
       if (e is FormatException) {
-        emit(state.copyWith(
-            status: LoginStatus.errorPasses, api: basketBuddyAPI));
+        emit(state.copyWith(status: LoginStatus.errorPasses));
       } else if (e is SocketException) {
         emit(state.copyWith(
           status: LoginStatus.errorOffline,

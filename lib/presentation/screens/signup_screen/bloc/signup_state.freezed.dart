@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SignUpState {
   SignUpStatus get status => throw _privateConstructorUsedError;
-  BasketBuddyAPI? get api => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignUpStateCopyWith<SignUpState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $SignUpStateCopyWith<$Res> {
           SignUpState value, $Res Function(SignUpState) then) =
       _$SignUpStateCopyWithImpl<$Res, SignUpState>;
   @useResult
-  $Res call({SignUpStatus status, BasketBuddyAPI? api});
+  $Res call({SignUpStatus status});
 }
 
 /// @nodoc
@@ -47,17 +46,12 @@ class _$SignUpStateCopyWithImpl<$Res, $Val extends SignUpState>
   @override
   $Res call({
     Object? status = null,
-    Object? api = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SignUpStatus,
-      api: freezed == api
-          ? _value.api
-          : api // ignore: cast_nullable_to_non_nullable
-              as BasketBuddyAPI?,
     ) as $Val);
   }
 }
@@ -70,7 +64,7 @@ abstract class _$$SignUpStateImplCopyWith<$Res>
       __$$SignUpStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SignUpStatus status, BasketBuddyAPI? api});
+  $Res call({SignUpStatus status});
 }
 
 /// @nodoc
@@ -85,17 +79,12 @@ class __$$SignUpStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? api = freezed,
   }) {
     return _then(_$SignUpStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SignUpStatus,
-      api: freezed == api
-          ? _value.api
-          : api // ignore: cast_nullable_to_non_nullable
-              as BasketBuddyAPI?,
     ));
   }
 }
@@ -103,16 +92,14 @@ class __$$SignUpStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SignUpStateImpl implements _SignUpState {
-  const _$SignUpStateImpl({required this.status, required this.api});
+  const _$SignUpStateImpl({required this.status});
 
   @override
   final SignUpStatus status;
-  @override
-  final BasketBuddyAPI? api;
 
   @override
   String toString() {
-    return 'SignUpState(status: $status, api: $api)';
+    return 'SignUpState(status: $status)';
   }
 
   @override
@@ -120,12 +107,11 @@ class _$SignUpStateImpl implements _SignUpState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignUpStateImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.api, api) || other.api == api));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, api);
+  int get hashCode => Object.hash(runtimeType, status);
 
   @JsonKey(ignore: true)
   @override
@@ -135,14 +121,11 @@ class _$SignUpStateImpl implements _SignUpState {
 }
 
 abstract class _SignUpState implements SignUpState {
-  const factory _SignUpState(
-      {required final SignUpStatus status,
-      required final BasketBuddyAPI? api}) = _$SignUpStateImpl;
+  const factory _SignUpState({required final SignUpStatus status}) =
+      _$SignUpStateImpl;
 
   @override
   SignUpStatus get status;
-  @override
-  BasketBuddyAPI? get api;
   @override
   @JsonKey(ignore: true)
   _$$SignUpStateImplCopyWith<_$SignUpStateImpl> get copyWith =>

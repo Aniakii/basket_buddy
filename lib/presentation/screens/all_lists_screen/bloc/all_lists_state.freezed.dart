@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AllListsState {
   AllListsStatus get status => throw _privateConstructorUsedError;
-  BasketBuddyAPI? get api => throw _privateConstructorUsedError;
+  List<ShoppingList> get allLists => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AllListsStateCopyWith<AllListsState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $AllListsStateCopyWith<$Res> {
           AllListsState value, $Res Function(AllListsState) then) =
       _$AllListsStateCopyWithImpl<$Res, AllListsState>;
   @useResult
-  $Res call({AllListsStatus status, BasketBuddyAPI? api});
+  $Res call({AllListsStatus status, List<ShoppingList> allLists});
 }
 
 /// @nodoc
@@ -47,17 +47,17 @@ class _$AllListsStateCopyWithImpl<$Res, $Val extends AllListsState>
   @override
   $Res call({
     Object? status = null,
-    Object? api = freezed,
+    Object? allLists = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AllListsStatus,
-      api: freezed == api
-          ? _value.api
-          : api // ignore: cast_nullable_to_non_nullable
-              as BasketBuddyAPI?,
+      allLists: null == allLists
+          ? _value.allLists
+          : allLists // ignore: cast_nullable_to_non_nullable
+              as List<ShoppingList>,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$AllListsStateImplCopyWith<$Res>
       __$$AllListsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AllListsStatus status, BasketBuddyAPI? api});
+  $Res call({AllListsStatus status, List<ShoppingList> allLists});
 }
 
 /// @nodoc
@@ -85,17 +85,17 @@ class __$$AllListsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? api = freezed,
+    Object? allLists = null,
   }) {
     return _then(_$AllListsStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AllListsStatus,
-      api: freezed == api
-          ? _value.api
-          : api // ignore: cast_nullable_to_non_nullable
-              as BasketBuddyAPI?,
+      allLists: null == allLists
+          ? _value._allLists
+          : allLists // ignore: cast_nullable_to_non_nullable
+              as List<ShoppingList>,
     ));
   }
 }
@@ -103,16 +103,23 @@ class __$$AllListsStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AllListsStateImpl implements _AllListsState {
-  const _$AllListsStateImpl({required this.status, required this.api});
+  const _$AllListsStateImpl(
+      {required this.status, required final List<ShoppingList> allLists})
+      : _allLists = allLists;
 
   @override
   final AllListsStatus status;
+  final List<ShoppingList> _allLists;
   @override
-  final BasketBuddyAPI? api;
+  List<ShoppingList> get allLists {
+    if (_allLists is EqualUnmodifiableListView) return _allLists;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allLists);
+  }
 
   @override
   String toString() {
-    return 'AllListsState(status: $status, api: $api)';
+    return 'AllListsState(status: $status, allLists: $allLists)';
   }
 
   @override
@@ -121,11 +128,12 @@ class _$AllListsStateImpl implements _AllListsState {
         (other.runtimeType == runtimeType &&
             other is _$AllListsStateImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.api, api) || other.api == api));
+            const DeepCollectionEquality().equals(other._allLists, _allLists));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, api);
+  int get hashCode => Object.hash(
+      runtimeType, status, const DeepCollectionEquality().hash(_allLists));
 
   @JsonKey(ignore: true)
   @override
@@ -137,12 +145,12 @@ class _$AllListsStateImpl implements _AllListsState {
 abstract class _AllListsState implements AllListsState {
   const factory _AllListsState(
       {required final AllListsStatus status,
-      required final BasketBuddyAPI? api}) = _$AllListsStateImpl;
+      required final List<ShoppingList> allLists}) = _$AllListsStateImpl;
 
   @override
   AllListsStatus get status;
   @override
-  BasketBuddyAPI? get api;
+  List<ShoppingList> get allLists;
   @override
   @JsonKey(ignore: true)
   _$$AllListsStateImplCopyWith<_$AllListsStateImpl> get copyWith =>

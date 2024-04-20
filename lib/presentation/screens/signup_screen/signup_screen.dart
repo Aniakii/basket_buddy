@@ -1,8 +1,5 @@
 import 'package:basket_buddy/constants/enums.dart';
-import 'package:basket_buddy/data/repositories/basket_buddy_api.dart';
 import 'package:basket_buddy/presentation/screens/all_lists_screen/all_lists_screen.dart';
-import 'package:basket_buddy/presentation/screens/all_lists_screen/bloc/all_lists_bloc.dart';
-import 'package:basket_buddy/presentation/screens/all_lists_screen/bloc/all_lists_event.dart';
 import 'package:basket_buddy/presentation/screens/signup_screen/bloc/signup_bloc.dart';
 import 'package:basket_buddy/presentation/screens/signup_screen/bloc/signup_event.dart';
 import 'package:basket_buddy/presentation/screens/signup_screen/bloc/signup_state.dart';
@@ -99,9 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocConsumer<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.status == SignUpStatus.confirmed) {
-          context.read<AllListsBloc>().add(
-                CreateInitialStateEvent(api: state.api ?? BasketBuddyAPI()),
-              );
           Navigator.of(context).pushReplacementNamed(AllListsScreen.id);
         } else if (state.status == SignUpStatus.errorOffline) {
           getAlertError(

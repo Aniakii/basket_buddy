@@ -1,8 +1,5 @@
 import 'package:basket_buddy/constants/enums.dart';
-import 'package:basket_buddy/data/repositories/basket_buddy_api.dart';
 import 'package:basket_buddy/presentation/screens/all_lists_screen/all_lists_screen.dart';
-import 'package:basket_buddy/presentation/screens/all_lists_screen/bloc/all_lists_bloc.dart';
-import 'package:basket_buddy/presentation/screens/all_lists_screen/bloc/all_lists_event.dart';
 import 'package:basket_buddy/presentation/screens/login_screen/bloc/login_bloc.dart';
 import 'package:basket_buddy/presentation/screens/login_screen/bloc/login_event.dart';
 import 'package:basket_buddy/presentation/screens/login_screen/bloc/login_state.dart';
@@ -83,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20.0),
               if (state.status == LoginStatus.loading)
-                const CircularProgressIndicator(),
+                const Center(child: CircularProgressIndicator()),
               if (state.status == LoginStatus.errorPasses)
                 const Text("Your login or password is wrong.",
                     style: TextStyle(color: Colors.red)),
@@ -99,9 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status == LoginStatus.confirmed) {
-          context.read<AllListsBloc>().add(
-                CreateInitialStateEvent(api: state.api ?? BasketBuddyAPI()),
-              );
           Navigator.of(context).pushReplacementNamed(AllListsScreen.id);
         } else if (state.status == LoginStatus.errorOffline) {
           getAlertError(

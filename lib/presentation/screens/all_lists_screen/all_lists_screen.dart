@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllListsScreen extends StatefulWidget {
+  const AllListsScreen({super.key});
+
   static const id = 'all_lists_screen';
 
   @override
@@ -75,13 +77,14 @@ class _AllListsScreenState extends State<AllListsScreen> {
                                 Expanded(
                                   flex: 8,
                                   child: AllList(
-                                      deleteFunction: (list) => {
-                                            setState(() {
-                                              context
-                                                  .read<AllListsBloc>()
-                                                  .add(DeleteListEvent(list));
-                                            }),
-                                          }),
+                                    deleteFunction: (list) => {
+                                      setState(() {
+                                        context
+                                            .read<AllListsBloc>()
+                                            .add(DeleteListEvent(list));
+                                      }),
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -94,10 +97,11 @@ class _AllListsScreenState extends State<AllListsScreen> {
         onPressed: () async {
           final result = await Navigator.of(context).pushNamed(AddListScreen.id,
               arguments: _addListController) as Map<String, dynamic>?;
+          if (!context.mounted) return;
           if (result != null) {
             int id = 0;
-            if (basketBuddyDatabase.shoppingLists.isNotEmpty) {
-              id = basketBuddyDatabase.shoppingLists
+            if (state.allLists.isNotEmpty) {
+              id = state.allLists
                       .map((e) => e.id)
                       .reduce((curr, next) => curr > next ? curr : next) +
                   1;

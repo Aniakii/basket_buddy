@@ -22,12 +22,6 @@ class ShoppingList {
     if (items.isEmpty) {
       return true;
     }
-
-    for (int i = 0; i < items.length; i++) {
-      if (items[i].isBought == false) {
-        return false;
-      }
-    }
-    return true;
+    return !items.any((final element) => !element.isBought);
   }
 }

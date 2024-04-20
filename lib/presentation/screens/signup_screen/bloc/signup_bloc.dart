@@ -9,17 +9,17 @@ import 'signup_event.dart';
 import 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  final BasketBuddyDataBase basketBuddyDataBase;
-
-  SignUpBloc(this.basketBuddyDataBase)
-      : super(const SignUpState(status: SignUpStatus.idle, api: null)) {
+  SignUpBloc(this._basketBuddyDataBase, this._api)
+      : super(const SignUpState(status: SignUpStatus.idle)) {
     on<RegisterEvent>(_onRegisterEvent);
     on<ChangeStatusEvent>(_onChangeStatusEvent);
   }
 
+  final BasketBuddyDataBase _basketBuddyDataBase;
+  final BasketBuddyAPI _api;
+
   Future<void> _onRegisterEvent(
       RegisterEvent event, Emitter<SignUpState> emit) async {
-    BasketBuddyAPI basketBuddyAPI = BasketBuddyAPI();
     emit(state.copyWith(
       status: SignUpStatus.loading,
     ));
@@ -32,9 +32,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
 
     try {
-      User user = await basketBuddyAPI.signUp(event.login, event.password);
-      basketBuddyDataBase.user = user;
-      emit(state.copyWith(status: SignUpStatus.confirmed, api: basketBuddyAPI));
+      User user = await _api.signUp(event.login, event.password);
+      _basketBuddyDataBase.user = user;
+      emit(state.copyWith(status: SignUpStatus.confirmed));
     } catch (e) {
       if (e is SocketException) {
         emit(state.copyWith(

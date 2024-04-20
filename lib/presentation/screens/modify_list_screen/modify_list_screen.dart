@@ -1,32 +1,40 @@
 import 'package:basket_buddy/constants/list_decorations.dart';
+import 'package:basket_buddy/data/models/shopping_list.dart';
 import 'package:basket_buddy/presentation/widgets/input_text.dart';
 import 'package:flutter/material.dart';
 
-class AddListScreen extends StatelessWidget {
-  AddListScreen({required this.nameController, super.key});
+class ModifyListScreen extends StatelessWidget {
+  const ModifyListScreen(
+      {required this.nameController, required this.shoppingList, super.key});
 
-  static const id = 'add_list_screen';
+  static const id = 'modify_list_screen';
 
   final TextEditingController nameController;
-
-  final colorsNames = listColors.keys.toList();
-  final emojisNames = listEmojis.keys.toList();
+  final ShoppingList shoppingList;
 
   @override
   Widget build(BuildContext context) {
+    nameController.text = shoppingList.name;
+
+    final colorsNames = listColors.keys.toList();
+    final emojisNames = listEmojis.keys.toList();
+
     String selectedColor = "White";
     String selectedEmoji = "s";
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New List'),
+        title: const Text('Modify List'),
+        backgroundColor: listColors[shoppingList.color] != Colors.white
+            ? listColors[shoppingList.color]
+            : Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text('Select List Name:'),
+            const Text('Change List Name:'),
             const SizedBox(height: 20.0),
             TextInput(
               controller: nameController,
@@ -34,6 +42,7 @@ class AddListScreen extends StatelessWidget {
               obscureText: false,
             ),
             const SizedBox(height: 20.0),
+            const Text('Change List Color:'),
             Wrap(
               spacing: 8.0,
               children: List.generate(
@@ -57,7 +66,7 @@ class AddListScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-            const Text('Select List Emoji:'),
+            const Text('Change List Emoji:'),
             Wrap(
               spacing: 8.0,
               children: List.generate(
@@ -80,12 +89,12 @@ class AddListScreen extends StatelessWidget {
                 var listObject = {
                   "name": name,
                   "color": selectedColor,
-                  "emoji": selectedEmoji,
+                  "emoji": selectedEmoji
                 };
                 nameController.clear();
                 Navigator.of(context).pop(listObject);
               },
-              child: const Text('Add List'),
+              child: const Text('Modify List'),
             ),
           ],
         ),
